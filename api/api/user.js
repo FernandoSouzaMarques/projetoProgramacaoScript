@@ -55,13 +55,12 @@ module.exports = app => {
   };
 
   const getById = (req, res) => {
-    if (req.params.id) {
-      app.db('users')
-        .where({ id: req.params.id })
-        .select('id', 'name', 'email', 'admin')
-        .then(users => res.json(users))
-        .catch(err => res.status(500).send(err));
-    }
+    app.db('users')
+      .where({ id: req.params.id })
+      .select('id', 'name', 'email', 'admin')
+      .first()
+      .then(users => res.json(users))
+      .catch(err => res.status(500).send(err));
   };
 
   return { save, get, getById }
